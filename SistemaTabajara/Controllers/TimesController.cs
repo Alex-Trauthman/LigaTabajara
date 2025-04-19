@@ -1,0 +1,117 @@
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using SistemaTabajara.Data;
+using SistemaTabajara.Models;
+
+namespace SistemaTabajara.Controllers
+{
+    public class TimesController : Controller
+    {
+        private readonly SistemaTabajaraContext _context;
+
+        public TimesController()
+        {
+            _context = new SistemaTabajaraContext();
+        }
+
+        public ActionResult Index()
+        {
+            var times = _context.Times.ToList();
+            return View(times);
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var time = _context.Times
+                .Include(t => t.Jogadores)
+                .Include(t => t.ComissaoTecnica)
+                .FirstOrDefault(t => t.Id == id);
+            if (time == null) return HttpNotFound();
+            ViewBag.IsApto = IsTimeApto(time);
+            return View(time);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Nome,DataFundacao,Estadio,Cidade,Estado,CapacidadeEstadio,CorPrincipal,CorSecundaria")] Time time)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Times.Add(time);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(time);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var time = _context.Times.Find(id);
+            if (time == null) return HttpNotFound();
+            return View(time);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Nome,DataFundacao,Estadio,Cidade,Estado,CapacidadeEstadio,CorPrincipal,CorSecundaria")] Time time)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Entry(time).State = EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(time);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var time = _context.Times.Find(id);
+            if (time == null) return HttpNotFound();
+            return View(time);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var time = _context.Times.Find(id);
+            _context.Times.Remove(time);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        private bool IsTimeApto(Time time)
+        {
+            if (time == null) return false;
+
+            bool hasEnoughPlayers = time.Jogadores.Count >= 30;
+            bool hasEnoughCommission = time.ComissaoTecnica.Count >= 5;
+            bool hasUniqueCargos = time.ComissaoTecnica
+                .GroupBy(c => c.Cargo)
+                .All(g => g.Count() == 1);
+            bool hasRequiredFields = !string.IsNullOrEmpty(time.Nome) &&
+                                     !string.IsNullOrEmpty(time.Estadio) &&
+                                     !string.IsNullOrEmpty(time.Cidade) &&
+                                     time.CapacidadeEstadio > 0;
+
+            return hasEnoughPlayers && hasEnoughCommission && hasUniqueCargos && hasRequiredFields;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _context.Dispose();
+            base.Dispose(disposing);
+        }
+    }
+}

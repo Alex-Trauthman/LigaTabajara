@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,10 +127,38 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartoesController.cs" />
+    <Compile Include="Controllers\ComissaoTecnicasController.cs" />
+    <Compile Include="Controllers\EstatisticaPartidasController.cs" />
+    <Compile Include="Controllers\GolsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JogadoresController.cs" />
+    <Compile Include="Controllers\LigasController.cs" />
+    <Compile Include="Controllers\ParticipacoesController.cs" />
+    <Compile Include="Controllers\PartidasController.cs" />
+    <Compile Include="Controllers\TimesController.cs" />
+    <Compile Include="Data\SistemaTabajaraContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202504190223175_InitialCreate.cs" />
+    <Compile Include="Migrations\202504190223175_InitialCreate.Designer.cs">
+      <DependentUpon>202504190223175_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504190223374_AddInitialData.cs" />
+    <Compile Include="Migrations\202504190223374_AddInitialData.Designer.cs">
+      <DependentUpon>202504190223374_AddInitialData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Cartao.cs" />
+    <Compile Include="Models\ComissaoTecnica.cs" />
+    <Compile Include="Models\EstatisticaPartida.cs" />
+    <Compile Include="Models\Gol.cs" />
+    <Compile Include="Models\Jogador.cs" />
+    <Compile Include="Models\Liga.cs" />
+    <Compile Include="Models\Participacao.cs" />
+    <Compile Include="Models\Partida.cs" />
+    <Compile Include="Models\Time.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +187,7 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -177,10 +213,54 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Cartoes\Create.cshtml" />
+    <Content Include="Views\Cartoes\Delete.cshtml" />
+    <Content Include="Views\Cartoes\Details.cshtml" />
+    <Content Include="Views\Cartoes\Edit.cshtml" />
+    <Content Include="Views\Cartoes\Index.cshtml" />
+    <Content Include="Views\ComissaoTecnicas\Create.cshtml" />
+    <Content Include="Views\ComissaoTecnicas\Delete.cshtml" />
+    <Content Include="Views\ComissaoTecnicas\Details.cshtml" />
+    <Content Include="Views\ComissaoTecnicas\Edit.cshtml" />
+    <Content Include="Views\ComissaoTecnicas\Index.cshtml" />
+    <Content Include="Views\EstatisticaPartidas\Create.cshtml" />
+    <Content Include="Views\EstatisticaPartidas\Delete.cshtml" />
+    <Content Include="Views\EstatisticaPartidas\Details.cshtml" />
+    <Content Include="Views\EstatisticaPartidas\Edit.cshtml" />
+    <Content Include="Views\EstatisticaPartidas\Index.cshtml" />
+    <Content Include="Views\Gols\Create.cshtml" />
+    <Content Include="Views\Gols\Delete.cshtml" />
+    <Content Include="Views\Gols\Details.cshtml" />
+    <Content Include="Views\Gols\Edit.cshtml" />
+    <Content Include="Views\Gols\Index.cshtml" />
+    <Content Include="Views\Jogadores\Create.cshtml" />
+    <Content Include="Views\Jogadores\Delete.cshtml" />
+    <Content Include="Views\Jogadores\Details.cshtml" />
+    <Content Include="Views\Jogadores\Edit.cshtml" />
+    <Content Include="Views\Jogadores\Index.cshtml" />
+    <Content Include="Views\Ligas\Create.cshtml" />
+    <Content Include="Views\Ligas\Delete.cshtml" />
+    <Content Include="Views\Ligas\Details.cshtml" />
+    <Content Include="Views\Ligas\Edit.cshtml" />
+    <Content Include="Views\Ligas\Index.cshtml" />
+    <Content Include="Views\Participacoes\Create.cshtml" />
+    <Content Include="Views\Participacoes\Delete.cshtml" />
+    <Content Include="Views\Participacoes\Details.cshtml" />
+    <Content Include="Views\Participacoes\Edit.cshtml" />
+    <Content Include="Views\Participacoes\Index.cshtml" />
+    <Content Include="Views\Partidas\Create.cshtml" />
+    <Content Include="Views\Partidas\Delete.cshtml" />
+    <Content Include="Views\Partidas\Details.cshtml" />
+    <Content Include="Views\Partidas\Edit.cshtml" />
+    <Content Include="Views\Partidas\Index.cshtml" />
+    <Content Include="Views\Times\Create.cshtml" />
+    <Content Include="Views\Times\Delete.cshtml" />
+    <Content Include="Views\Times\Details.cshtml" />
+    <Content Include="Views\Times\Edit.cshtml" />
+    <Content Include="Views\Times\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -208,6 +288,14 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202504190223175_InitialCreate.resx">
+      <DependentUpon>202504190223175_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504190223374_AddInitialData.resx">
+      <DependentUpon>202504190223374_AddInitialData.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -242,7 +330,10 @@
       <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

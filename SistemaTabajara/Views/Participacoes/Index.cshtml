@@ -1,0 +1,46 @@
+﻿@model IEnumerable<SistemaTabajara.Models.Participacao>
+
+@{
+    ViewBag.Title = "Participações";
+}
+
+<h2>Participações</h2>
+
+<p>
+    @Html.ActionLink("Criar Nova Participação", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Time</th>
+        <th>Liga</th>
+        <th>@Html.DisplayNameFor(model => model.Pontos)</th>
+        <th>@Html.DisplayNameFor(model => model.Jogos)</th>
+        <th>@Html.DisplayNameFor(model => model.Vitorias)</th>
+        <th>@Html.DisplayNameFor(model => model.Empates)</th>
+        <th>@Html.DisplayNameFor(model => model.Derrotas)</th>
+        <th>@Html.DisplayNameFor(model => model.GolsPro)</th>
+        <th>@Html.DisplayNameFor(model => model.GolsContra)</th>
+        <th>Ações</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Time.Nome)</td>
+            <td>@Html.DisplayFor(modelItem => item.Liga.Nome)</td>
+            <td>@Html.DisplayFor(modelItem => item.Pontos)</td>
+            <td>@Html.DisplayFor(modelItem => item.Jogos)</td>
+            <td>@Html.DisplayFor(modelItem => item.Vitorias)</td>
+            <td>@Html.DisplayFor(modelItem => item.Empates)</td>
+            <td>@Html.DisplayFor(modelItem => item.Derrotas)</td>
+            <td>@Html.DisplayFor(modelItem => item.GolsPro)</td>
+            <td>@Html.DisplayFor(modelItem => item.GolsContra)</td>
+            <td>
+                @Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" }) |
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

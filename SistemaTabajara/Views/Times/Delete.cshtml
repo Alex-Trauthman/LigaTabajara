@@ -1,0 +1,88 @@
+﻿@model SistemaTabajara.Models.Time
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Time</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFundacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataFundacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estadio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estadio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cidade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CapacidadeEstadio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CapacidadeEstadio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorPrincipal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorPrincipal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorSecundaria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorSecundaria)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

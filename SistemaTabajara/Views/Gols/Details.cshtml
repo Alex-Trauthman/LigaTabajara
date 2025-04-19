@@ -1,0 +1,50 @@
+﻿@model SistemaTabajara.Models.Gol
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Gol</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Jogador.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jogador.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Partida.Estadio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Partida.Estadio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Minuto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Minuto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoGol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoGol)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
